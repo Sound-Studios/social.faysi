@@ -205,8 +205,8 @@
 </style>
 </head>
 <body>
-  <form action="contact.php">
-    <button class="support">Support</button><br>
+  <form action="report.php">
+    <button class="support">Report</button><br>
   </form><br>
   <form action="update.html">
     <button class="update">Changelog</button>
@@ -215,7 +215,7 @@
   <a href="index.php">
     <h1>Sound Videos</h1>
   </a>
-  <dev class="info">You can Contact Connor on Discord</dev>
+  <dev class="info">We have Loading Problems</dev>
   <form id="filterForm">
     <select name="category" class="category">
       <option value="">All</option>
