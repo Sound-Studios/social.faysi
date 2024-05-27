@@ -1,0 +1,15 @@
+name: Deploy to Netcup
+
+on:
+  push:
+    branches:
+      - main  # Passe diesen Branch-Namen an deinen Haupt-Branch an
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger deployment
+        run: |
+          curl -X GET "https://social.faysi.de/deploy.php?token=${{ secrets.DEPLOY_SECRET }}"
