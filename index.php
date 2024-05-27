@@ -67,6 +67,7 @@
             object-fit: cover;
             border-radius: 10px;
             transition: transform 0.3s;
+            border: 5px solid white; /* Add border around the images */
         }
 
         .video-container img:hover {
@@ -202,7 +203,6 @@
         .info{
         color: red;
         }
-
 </style>
 </head>
 <body>
