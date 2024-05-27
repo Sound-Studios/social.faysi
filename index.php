@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+	<meta name="description" content="Upload Image,Videos,Audios for FREE and without a Account">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sound Videos</title>
+<title>FAYSi Social</title>
 <style>
   .news {
             color: red;
@@ -12,7 +13,7 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #333;
+            background: linear-gradient(to right, #000000, #02746b); /* Neuer Farbverlauf */
             color: #fff;
             position: relative;
         }
@@ -213,9 +214,9 @@
   </form>
  <hr>
   <a href="index.php">
-    <h1>Sound Videos</h1>
+    <h1>FAYSi Social</h1>
   </a>
-  <dev class="info">We have Loading Problems</dev>
+  
   <form id="filterForm">
     <select name="category" class="category">
       <option value="">All</option>
@@ -227,7 +228,7 @@
     <input type="text" name="search" placeholder="Search..." class="search">
     <button type="submit">Search/Filter</button>
   </form>
-  <div>Click (+) for upload your videos or audios</div><br><br><br>
+  <div>Click (+) for upload your videos, pictures or audios</div><br><br><br>
 
   <div class="upload-btn">
     <button id="uploadBtn">+</button>
