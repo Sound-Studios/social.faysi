@@ -38,7 +38,7 @@
 <body>
 
 <div class="admin-panel">
-    <h1>Admin Panel - Reported Images</h1>
+    <h1>Admin Panel - Reported Files</h1>
 
     <?php // YOUR ADMIN PASSWORD
     $correctPassword = 'your_admin_password';
