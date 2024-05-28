@@ -216,7 +216,7 @@
   <a href="index.php">
     <h1>FAYSi Social</h1>
   </a>
-  
+
   <form id="filterForm">
     <select name="category" class="category">
       <option value="">All</option>
@@ -233,8 +233,8 @@
   <div class="upload-btn">
     <button id="uploadBtn">+</button>
   </div>
-
-  <div class="popup" id="uploadPopup" style="display: none;">
+  
+  <div class="popup" id="uploadPopup" style="display: none;"> 
     <h2>Upload Files</h2>
     <form action="" method="post" enctype="multipart/form-data">
       <input type="file" name="file" accept="video/*, audio/*, image/*" class="file-upload">
@@ -274,7 +274,7 @@
         }
     }
 
-    
+    // public image(change your own in /public)
     function getPreviewImage($fileExt) {
         
         $previewImages = [
@@ -321,7 +321,7 @@
     
       $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 
-      
+      // supportet file type
       $allowedExtensions = array('mp4', 'mov', 'avi', 'mp3', 'wav', 'png', 'jpg', 'jpeg', 'webp', 'gif', 'mpg', 'mpeg', 'mpe', 'js', 'mpe', 'html');
 
       
@@ -331,7 +331,7 @@
              
               $uploadPath = $uploadDirectory . $fileName;
               if (!file_exists($uploadPath)) {
-              
+              // upload logs
                   if (move_uploaded_file($fileTmpName, $uploadPath)) {
                       
                       echo "Your file Online <3";
@@ -357,8 +357,9 @@
   }
   ?>
 
+
 <script>
-document.getElementById("uploadBtn").addEventListener("click", function() {
+document.getElementById("uploadBtn").addEventListener("click", function() { //upload buttom
   document.getElementById("uploadPopup").style.display = "block";
   document.body.appendChild(document.createElement('div')).className = "overlay";
 });
@@ -370,12 +371,12 @@ document.body.addEventListener("click", function(e) {
   }
 });
 
-
+//catgegory on the search bar
 document.querySelector('select[name="category"]').addEventListener('change', function() {
   document.getElementById('filterForm').submit();
 });
 
-
+//not used
 document.addEventListener('DOMContentLoaded', function() {
   document.body.classList.add('dark-mode'); 
 });
