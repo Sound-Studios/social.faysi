@@ -68,6 +68,16 @@
         .cssbug {
             color: red;
         }
+
+        .share-link {
+            margin-left: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .share-link:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 
@@ -85,32 +95,32 @@
 
         <h2>Recent Updates:</h2>
         <div id="changelog"></div>
-		
-		<hr>
+
+        <hr>
 
         <h2>Old Changelog Updates:</h2>
         <div>[05.05.2024 01:34] Add more features for the Admin Panel</div><br>
         <div class="cssbug">[05.05.2024 01:00] Add Report Panel</div><br>
-         <div class="cssbug">[05.05.2024 00:49] Add Admin Panel</div><br>
-         <div>[04.05.2024 22:58] Add the info text"You can Contact Connor <br>on Discord" to "we have loading problems"in index.html</div><br>
-         <div>[25.04.2024 11:04] Add the info text"You can Contact Connor <br>on Discord"in index.html</div><br>
+        <div class="cssbug">[05.05.2024 00:49] Add Admin Panel</div><br>
+        <div>[04.05.2024 22:58] Add the info text "You can Contact Connor on Discord" to "we have loading problems" in index.html</div><br>
+        <div>[25.04.2024 11:04] Add the info text "You can Contact Connor on Discord" in index.html</div><br>
         <div>[25.04.2024 11:04] Update the Support/Contact site</div><br>
         <div>[11.03.2024 20:39] Rename Update to Changelog</div><br>
         <div class="cssbug">[11.03.2024 18:43] Add HTML, JS Support (FILE)</div><br>
         <div class="cssbug">[11.03.2024 18:20] Add 404 Page</div><br>
-        <div>[10.03.2024 23:42] Update Video Section. <br>Videos loading Faster NOW</div><br>
+        <div>[10.03.2024 23:42] Update Video Section. Videos loading Faster NOW</div><br>
         <div>[10.03.2024 17:29] Remove Sound Rate Link</div><br>
         <div class="cssbug">[10.03.2024 17:26] Fix CSS Bug</div><br>
         <div>[10.03.2024 04:40] Add Sound Rate Link</div><br>
         <div>[09.03.2024 21:11] You can now Upload Faster</div><br>
-        <div>[09.03.2024 18:13] Move Update Button in <a href="index.php">Home</a> in the center(css fix)</div><br>
-        <div>[09.03.2024 17:51] Add Go Home Button at this Page </div><br>
-        <div>[09.03.2024 17:44] Add This Page </div>
+        <div>[09.03.2024 18:13] Move Update Button in <a href="index.php">Home</a> in the center (css fix)</div><br>
+        <div>[09.03.2024 17:51] Add Go Home Button at this Page</div><br>
+        <div>[09.03.2024 17:44] Add This Page</div>
 
         <h2>Notes:</h2>
         <div>[25.04.2024 11:11] We will add a Partner Site</div><br>
         <div>[09.03.2024 21:12] We will add Multi Language</div><br>
-        <div>[09.03.2024 17:44] We will Update the Video Section<br> The Video Section was loading to long</div><br>
+        <div>[09.03.2024 17:44] We will Update the Video Section. The Video Section was loading too long</div><br>
     </div>
     <br>
     <div class="container">
@@ -122,8 +132,8 @@
         <div>RPlayer on Discord <a class="red">@rplayer73ytkiratakahashi</a></div><br>
         <div>audixdev on <a href="https://nerimity.com/app/profile/1337466031416975361">Nerimity</a></div><br>
         <hr>
-        <h2>Contributors(Code)</h2>
-        <div>Sound Studios (Coding Team)<a href="https://sound-studios.de/">Website</a></div><br>
+        <h2>Contributors (Code)</h2>
+        <div>Sound Studios (Coding Team) <a href="https://sound-studios.de/">Website</a></div><br>
         <div>FAYSi (Owner) on <a href="https://nerimity.com/app/profile/1332395452276056065">Nerimity</a></div><br>
     </div>
 
@@ -143,6 +153,14 @@
                     minute: '2-digit'
                 });
                 commitElement.innerHTML = `[${commitDate}] ${commit.commit.message}`;
+                
+                const shareLink = document.createElement('a');
+                shareLink.className = 'share-link';
+                shareLink.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(commit.commit.message)}&url=${encodeURIComponent('https://github.com/sound-studios/social.faysi/commits')}`;
+                shareLink.target = '_blank';
+                shareLink.innerText = 'Share';
+
+                commitElement.appendChild(shareLink);
                 changelogContainer.appendChild(commitElement);
             });
         }
@@ -153,5 +171,4 @@
 </body>
 <div>&#169;Sound-Studios</div>
 <a href="links.html">see all of faysi</a>
-
 </html>
