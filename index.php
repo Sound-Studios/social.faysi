@@ -223,7 +223,6 @@
       <option value="videos">Videos</option>
       <option value="audios">Audios</option>
       <option value="pictures">Pictures</option>
-      <option value="script">Script(OP Alpha)</option>
     </select>
     <input type="text" name="search" placeholder="Search..." class="search">
     <button type="submit">Search/Filter</button>
@@ -283,7 +282,6 @@
             'avi' => 'videos.png',
             'mp3' => 'audio.png',
             'wav' => 'audio.png',
-            'html' => 'html.png',
          
         ];
 
@@ -322,7 +320,7 @@
       $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 
       // supportet file type
-      $allowedExtensions = array('mp4', 'mov', 'avi', 'mp3', 'wav', 'png', 'jpg', 'jpeg', 'webp', 'gif', 'mpg', 'mpeg', 'mpe', 'js', 'mpe', 'html');
+      $allowedExtensions = array('mp4', 'mov', 'avi', 'mp3', 'wav', 'png', 'jpg', 'jpeg', 'webp', 'gif', 'mpg', 'mpeg', 'mpe','mpe');
 
       
       if (in_array($fileExt, $allowedExtensions)) {

@@ -40,7 +40,7 @@
 <div class="admin-panel">
     <h1>Admin Panel - Reported Images</h1>
 
-    <?php
+    <?php // YOUR ADMIN PASSWORD
     $correctPassword = 'your_admin_password';
     $submittedPassword = isset($_POST['admin_password']) ? $_POST['admin_password'] : '';
 

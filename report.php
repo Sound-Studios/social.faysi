@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Report an Image</title>
+    <title>Report an File</title>
     <style>
         body {
             background-color: #333;
@@ -40,7 +40,7 @@
 <body>
 
 <div class="report-panel">
-    <h1>Report an Image</h1>
+    <h1>Report an File</h1>
 
     <?php
     $uploadsDir = __DIR__ . '/uploads/';  // Pfad zum Upload-Ordner
