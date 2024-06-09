@@ -294,7 +294,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       }
   }
   ?>
-<div class="info">All files were deleted (Hacking)</div>
   <form id="filterForm">
     <select name="category" class="category">
       <option value="">All</option>
