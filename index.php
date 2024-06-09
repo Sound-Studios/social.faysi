@@ -274,6 +274,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </style>
 </head>
 <body>
+
   <form action="report.php">
     <button class="support">Report</button><br>
   </form><br>
@@ -284,6 +285,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <a href="index.php">
     <h1>FAYSi Social</h1>
   </a>
+  <?php
+  $newsFile = 'news.txt';
+  if (file_exists($newsFile)) {
+      $newsContent = file_get_contents($newsFile);
+      if (!empty($newsContent)) {
+          echo "<div class='news'>$newsContent</div>";
+      }
+  }
+  ?>
 <div class="info">All files were deleted (Hacking)</div>
   <form id="filterForm">
     <select name="category" class="category">

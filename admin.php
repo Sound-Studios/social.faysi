@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,8 +43,8 @@
 <div class="admin-panel">
     <h1>Admin Panel - Reported Files</h1>
 
-    <?php // YOUR ADMIN PASSWORD
-    $correctPassword = 'your_admin_password';
+    <?php
+    $correctPassword = '09876Jason.';
     $submittedPassword = isset($_POST['admin_password']) ? $_POST['admin_password'] : '';
 
     if ($submittedPassword === $correctPassword) {
@@ -54,10 +57,10 @@
             if (!empty($reportedImages)) {
                 foreach ($reportedImages as $reportedImage) {
                     echo "<form action='' method='post'>";
-                    echo "<input type='hidden' name='admin_password' value='$correctPassword'>";  // Beibehalten des Passworts
+                    echo "<input type='hidden' name='admin_password' value='$correctPassword'>";
                     echo "$reportedImage ";
-                    echo "<button type='submit' name='delete_reported' value='$reportedImage'>Delete</button>";  // Löschen des Bildes
-                    echo "<button type='submit' name='reset_reported' value='$reportedImage'>Reset Report</button>";  // Zurücksetzen des Berichts
+                    echo "<button type='submit' name='delete_reported' value='$reportedImage'>Delete</button>";
+                    echo "<button type='submit' name='reset_reported' value='$reportedImage'>Reset Report</button>";
                     echo "</form>";
                 }
             } else {
@@ -66,14 +69,21 @@
         } else {
             echo "<div class='info'>No reported images.</div>";
         }
+
+        // News submission form
+        echo "<h2>Submit News</h2>";
+        echo "<form action='' method='post'>";
+        echo "<input type='hidden' name='admin_password' value='$correctPassword'>";
+        echo "<textarea name='news_content' rows='4' cols='50' placeholder='Enter news here...'></textarea><br>";
+        echo "<button type='submit' name='submit_news'>Submit News</button>";
+        echo "</form>";
+
         echo "</div>";
     } else {
-        // Passwort falsch oder nicht angegeben
         if ($_SERVER["REQUEST_METHOD"] === "POST" && $submittedPassword !== '') {
             echo "<div class='info'>Incorrect password!</div>";
         }
 
-        // Passwort-Eingabeformular
         ?>
         <form action="" method="post">
             <input type="password" name="admin_password" placeholder="Enter password">
@@ -90,7 +100,6 @@
 
             if (file_exists($filePath)) {
                 if (unlink($filePath)) {
-                    // Aus der Report-Liste entfernen
                     $reportedFile = 'reported.txt';
                     $reportedImages = file($reportedFile, FILE_IGNORE_NEW_LINES);
                     $updatedReportedImages = array_diff($reportedImages, [$fileToDelete]);
@@ -111,6 +120,12 @@
             $updatedReportedImages = array_diff($reportedImages, [$fileToReset]);
             file_put_contents($reportedFile, implode("\n", $updatedReportedImages));
             echo "<div class='info'>$fileToReset report has been reset.</div>";
+        }
+
+        if (isset($_POST['submit_news']) && !empty($_POST['news_content'])) {
+            $newsContent = htmlspecialchars($_POST['news_content']);
+            file_put_contents('news.txt', $newsContent);
+            echo "<div class='info'>News has been updated.</div>";
         }
     }
     ?>
