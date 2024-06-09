@@ -1,12 +1,80 @@
+<?php
+session_start();
+
+function getUploads() {
+    if (!isset($_SESSION['uploads'])) {
+        $_SESSION['uploads'] = [];
+    }
+    return $_SESSION['uploads'];
+}
+
+function addUpload() {
+    $_SESSION['uploads'][] = time();
+}
+
+function clearOldUploads() {
+    $oneHourAgo = time() - 3600;
+    $_SESSION['uploads'] = array_filter(getUploads(), function ($timestamp) use ($oneHourAgo) {
+        return $timestamp > $oneHourAgo;
+    });
+}
+
+function canUpload() {
+    clearOldUploads();
+    return count(getUploads()) < 5;
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!canUpload()) {
+        echo "You have reached the limit of 5 uploads per hour. Please try again later.";
+    } else {
+        $uploadDirectory = 'uploads/';
+
+        $fileName = $_FILES['file']['name'];
+        $fileTmpName = $_FILES['file']['tmp_name'];
+        $fileType = $_FILES['file']['type'];
+        $fileSize = $_FILES['file']['size'];
+        $fileError = $_FILES['file']['error'];
+
+        $title = isset($_POST['title']) ? $_POST['title'] : '';
+
+        $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
+        $allowedExtensions = array('mp4', 'mov', 'avi', 'mp3', 'wav', 'png', 'jpg', 'jpeg', 'webp', 'gif', 'mpg', 'mpeg', 'mpe','mpe');
+
+        if (in_array($fileExt, $allowedExtensions)) {
+            if ($fileError === 0) {
+                $uploadPath = $uploadDirectory . $fileName;
+                if (!file_exists($uploadPath)) {
+                    if (move_uploaded_file($fileTmpName, $uploadPath)) {
+                        addUpload();
+                        echo "Your file is online <3";
+                        echo "<br>";
+                        echo "URL: <a href='$uploadPath'>$uploadPath</a>";
+                    } else {
+                        echo "Your file has an error :(.";
+                    }
+                } else {
+                    echo "Your file already exists";
+                }
+            } else {
+                echo "Your file cannot be uploaded";
+            }
+        } else {
+            echo "Invalid file type. Please only upload videos, audios, or images.";
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-	<meta name="description" content="Upload Image,Videos,Audios for FREE and without a Account">
+<meta name="description" content="Upload Image,Videos,Audios for FREE and without a Account">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FAYSi Social</title>
 <style>
-  .news {
+ .news {
             color: red;
         }
 
@@ -216,7 +284,7 @@
   <a href="index.php">
     <h1>FAYSi Social</h1>
   </a>
-<div class="info">All files was deleted (Hacking)</div>
+<div class="info">All files were deleted (Hacking)</div>
   <form id="filterForm">
     <select name="category" class="category">
       <option value="">All</option>
@@ -244,9 +312,7 @@
 
   <div class="video-container">
     <?php
-    
     $uploadDirectory = 'uploads';
-
     
     function displayUploadedFiles($directory, $category = '', $search = '') {
         if (is_dir($directory)) {
@@ -301,63 +367,8 @@
     ?>
   </div>
 
-  <?php
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
-   
-      $uploadDirectory = 'uploads/';
-
-     
-      $fileName = $_FILES['file']['name'];
-      $fileTmpName = $_FILES['file']['tmp_name'];
-      $fileType = $_FILES['file']['type'];
-      $fileSize = $_FILES['file']['size'];
-      $fileError = $_FILES['file']['error'];
-
-     
-      $title = isset($_POST['title']) ? $_POST['title'] : ''; 
-
-    
-      $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-
-      // supportet file type
-      $allowedExtensions = array('mp4', 'mov', 'avi', 'mp3', 'wav', 'png', 'jpg', 'jpeg', 'webp', 'gif', 'mpg', 'mpeg', 'mpe','mpe');
-
-      
-      if (in_array($fileExt, $allowedExtensions)) {
-         
-          if ($fileError === 0) {
-             
-              $uploadPath = $uploadDirectory . $fileName;
-              if (!file_exists($uploadPath)) {
-              // upload logs
-                  if (move_uploaded_file($fileTmpName, $uploadPath)) {
-                      
-                      echo "Your file Online <3";
-                      echo "<br>";
-            
-                      echo "URL: <a href='$uploadPath'>$uploadPath</a>";
-                  } else {
-         
-                      echo "Your file has a error :(.";
-                  }
-              } else {
-                  
-                  echo "Your file was allready exists";
-              }
-          } else {
-              
-              echo "Your file can not be uploaded";
-          }
-      } else {
-          
-          echo "Invalid file type. Please only upload videos, audios or images.";
-      }
-  }
-  ?>
-
-
 <script>
-document.getElementById("uploadBtn").addEventListener("click", function() { //upload buttom
+document.getElementById("uploadBtn").addEventListener("click", function() {
   document.getElementById("uploadPopup").style.display = "block";
   document.body.appendChild(document.createElement('div')).className = "overlay";
 });
@@ -369,12 +380,10 @@ document.body.addEventListener("click", function(e) {
   }
 });
 
-//catgegory on the search bar
 document.querySelector('select[name="category"]').addEventListener('change', function() {
   document.getElementById('filterForm').submit();
 });
 
-//not used
 document.addEventListener('DOMContentLoaded', function() {
   document.body.classList.add('dark-mode'); 
 });
