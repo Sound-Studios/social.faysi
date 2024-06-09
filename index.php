@@ -216,7 +216,7 @@
   <a href="index.php">
     <h1>FAYSi Social</h1>
   </a>
-
+<div class="info">All files was deleted (Hacking)</div>
   <form id="filterForm">
     <select name="category" class="category">
       <option value="">All</option>
