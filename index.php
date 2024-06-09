@@ -302,12 +302,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           $backgroundColor = "background: $backgroundColorContent;";
       }
   }
+
+  $titleFile = 'title.txt';
+  $title = 'FAYSi Social';
+  if (file_exists($titleFile)) {
+      $titleContent = file_get_contents($titleFile);
+      if (!empty($titleContent)) {
+          $title = htmlspecialchars($titleContent);
+      }
+  }
   ?>
   <style>
   body {
       <?php echo $backgroundColor; ?>
   }
   </style>
+
   <form id="filterForm">
     <select name="category" class="category">
       <option value="">All</option>

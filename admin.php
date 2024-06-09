@@ -87,6 +87,14 @@ session_start();
         echo "<button type='submit' name='submit_background'>Submit Background</button>";
         echo "</form>";
 
+        // Title update form
+        echo "<h2>Update Title</h2>";
+        echo "<form action='' method='post'>";
+        echo "<input type='hidden' name='admin_password' value='$correctPassword'>";
+        echo "<input type='text' name='title' placeholder='Enter new title'><br><br>";
+        echo "<button type='submit' name='submit_title'>Update Title</button>";
+        echo "</form>";
+
         echo "</div>";
     } else {
         if ($_SERVER["REQUEST_METHOD"] === "POST" && $submittedPassword !== '') {
@@ -143,6 +151,12 @@ session_start();
             $backgroundColor = "linear-gradient(to right, $color1, $color2)";
             file_put_contents('background_color.txt', $backgroundColor);
             echo "<div class='info'>Background color has been updated.</div>";
+        }
+
+        if (isset($_POST['submit_title']) && !empty($_POST['title'])) {
+            $title = htmlspecialchars($_POST['title']);
+            file_put_contents('title.txt', $title);
+            echo "<div class='info'>Title has been updated.</div>";
         }
     }
     ?>
