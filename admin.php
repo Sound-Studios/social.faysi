@@ -44,7 +44,7 @@ session_start();
     <h1>Admin Panel - Reported Files</h1>
 
     <?php
-    $correctPassword = '09876Jason.';
+    $correctPassword = 'your_admin_password';
     $submittedPassword = isset($_POST['admin_password']) ? $_POST['admin_password'] : '';
 
     if ($submittedPassword === $correctPassword) {
@@ -79,10 +79,11 @@ session_start();
         echo "</form>";
 
         // Background color form
-        echo "<h2>Set Background Color</h2>";
+        echo "<h2>Set Background Gradient Colors</h2>";
         echo "<form action='' method='post'>";
         echo "<input type='hidden' name='admin_password' value='$correctPassword'>";
-        echo "<input type='text' name='background_color' placeholder='Enter background color (e.g., #000000, linear-gradient(to right, #000000, #02746b))'><br>";
+        echo "<input type='color' name='color1' value='#000000'> Color 1<br><br>";
+        echo "<input type='color' name='color2' value='#02746b'> Color 2<br><br>";
         echo "<button type='submit' name='submit_background'>Submit Background</button>";
         echo "</form>";
 
@@ -136,8 +137,10 @@ session_start();
             echo "<div class='info'>News has been updated.</div>";
         }
 
-        if (isset($_POST['submit_background']) && !empty($_POST['background_color'])) {
-            $backgroundColor = htmlspecialchars($_POST['background_color']);
+        if (isset($_POST['submit_background']) && !empty($_POST['color1']) && !empty($_POST['color2'])) {
+            $color1 = htmlspecialchars($_POST['color1']);
+            $color2 = htmlspecialchars($_POST['color2']);
+            $backgroundColor = "linear-gradient(to right, $color1, $color2)";
             file_put_contents('background_color.txt', $backgroundColor);
             echo "<div class='info'>Background color has been updated.</div>";
         }

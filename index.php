@@ -294,12 +294,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       }
   }
 
-  $backgroundFile = 'background_color.txt';
-  if (file_exists($backgroundFile)) {
-      $backgroundColor = file_get_contents($backgroundFile);
-      echo "<style>body { background: $backgroundColor; }</style>";
+  $backgroundColorFile = 'background_color.txt';
+  $backgroundColor = 'background: #000000;';
+  if (file_exists($backgroundColorFile)) {
+      $backgroundColorContent = file_get_contents($backgroundColorFile);
+      if (!empty($backgroundColorContent)) {
+          $backgroundColor = "background: $backgroundColorContent;";
+      }
   }
   ?>
+  <style>
+  body {
+      <?php echo $backgroundColor; ?>
+  }
+  </style>
   <form id="filterForm">
     <select name="category" class="category">
       <option value="">All</option>
