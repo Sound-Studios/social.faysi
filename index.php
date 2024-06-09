@@ -293,6 +293,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           echo "<div class='news'>$newsContent</div>";
       }
   }
+
+  $backgroundFile = 'background_color.txt';
+  if (file_exists($backgroundFile)) {
+      $backgroundColor = file_get_contents($backgroundFile);
+      echo "<style>body { background: $backgroundColor; }</style>";
+  }
   ?>
   <form id="filterForm">
     <select name="category" class="category">

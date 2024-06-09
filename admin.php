@@ -78,6 +78,14 @@ session_start();
         echo "<button type='submit' name='submit_news'>Submit News</button>";
         echo "</form>";
 
+        // Background color form
+        echo "<h2>Set Background Color</h2>";
+        echo "<form action='' method='post'>";
+        echo "<input type='hidden' name='admin_password' value='$correctPassword'>";
+        echo "<input type='text' name='background_color' placeholder='Enter background color (e.g., #000000, linear-gradient(to right, #000000, #02746b))'><br>";
+        echo "<button type='submit' name='submit_background'>Submit Background</button>";
+        echo "</form>";
+
         echo "</div>";
     } else {
         if ($_SERVER["REQUEST_METHOD"] === "POST" && $submittedPassword !== '') {
@@ -126,6 +134,12 @@ session_start();
             $newsContent = htmlspecialchars($_POST['news_content']);
             file_put_contents('news.txt', $newsContent);
             echo "<div class='info'>News has been updated.</div>";
+        }
+
+        if (isset($_POST['submit_background']) && !empty($_POST['background_color'])) {
+            $backgroundColor = htmlspecialchars($_POST['background_color']);
+            file_put_contents('background_color.txt', $backgroundColor);
+            echo "<div class='info'>Background color has been updated.</div>";
         }
     }
     ?>
