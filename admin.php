@@ -5,43 +5,107 @@ session_start();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Panel - Manage Reports</title>
+    <title>Admin Panel</title>
     <style>
-        body {
-            background-color: #333;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
+       body {
+    background-color: #282c34;
+    color: #abb2bf;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
 
-        .admin-panel {
-            margin-top: 50px;
-        }
+.admin-panel {
+    margin: 50px auto;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #3c4048;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
 
-        .file-list {
-            text-align: left;
-            display: inline-block;
-            margin: 20px auto;
-        }
+h1, h2 {
+    color: #61dafb;
+}
 
-        .file-list button {
-            background-color: red;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
+.file-list {
+    text-align: left;
+    margin: 20px auto;
+}
 
-        .info {
-            color: red;
-        }
+.file-list form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #444b56;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.file-list button {
+    background-color: #e06c75;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.file-list button:hover {
+    background-color: #be5046;
+}
+
+.info {
+    color: #e06c75;
+    margin: 10px 0;
+}
+
+form {
+    margin: 20px 0;
+}
+
+input[type="password"], input[type="text"], textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #444b56;
+    background-color: #444b56;
+    color: #abb2bf;
+}
+
+input[type="color"] {
+    padding: 5px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #444b56;
+    background-color: #444b56;
+    color: #abb2bf;
+}
+
+button[type="submit"] {
+    background-color: #61dafb;
+    color: #282c34;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: #21a1f1;
+}
+
     </style>
 </head>
 <body>
 
 <div class="admin-panel">
-    <h1>Admin Panel - Reported Files</h1>
+    <h1>Admin Panel</h1>
 
     <?php
     $correctPassword = 'your_admin_password';
