@@ -1,6 +1,13 @@
 <?php
 session_start();
 
+// Prüfe, ob der Benutzer authentifiziert ist, andernfalls leite ihn zur Anmeldung weiter
+if (!isset($_SESSION['access_token'])) {
+    header('Location: /login.php');
+    exit();
+}
+
+// Funktionen für den Datei-Upload und Spam-Überprüfung
 function getUploads() {
     if (!isset($_SESSION['uploads'])) {
         $_SESSION['uploads'] = [];
@@ -24,24 +31,52 @@ function canUpload() {
     return count(getUploads()) < 5;
 }
 
+function antiSpamUpload() {
+    if (isset($_SESSION['last_upload_time'])) {
+        $minTimeBetweenUploads = 60;
+        $lastUploadTime = $_SESSION['last_upload_time'];
+        $currentTime = time();
+        $timeSinceLastUpload = $currentTime - $lastUploadTime;
+        if ($timeSinceLastUpload < $minTimeBetweenUploads) {
+            return true;
+        }
+    }
+    $_SESSION['last_upload_time'] = time();
+    return false;
+}
+
+function zuVieleUploads() {
+    $maxUploadsPerHour = 5;
+    $timePeriodInSeconds = 3600;
+    $uploads = isset($_SESSION['uploads']) ? $_SESSION['uploads'] : [];
+    $uploads = array_filter($uploads, function($timestamp) use ($timePeriodInSeconds) {
+        return $timestamp > (time() - $timePeriodInSeconds);
+    });
+    $uploads[] = time();
+    $_SESSION['uploads'] = $uploads;
+    return count($uploads) > $maxUploadsPerHour;
+}
+
+// Verarbeitung des Dateiuploads beim POST-Request
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (!canUpload()) {
+    // Überprüfung auf Spam
+    if (antiSpamUpload()) {
+        echo "Please wait for a moment before uploading again.";
+    } elseif (zuVieleUploads()) {
+        echo "You have uploaded too many files within a short period of time. Please try again later.";
+    } elseif (!canUpload()) {
         echo "You have reached the limit of 5 uploads per hour. Please try again later.";
     } else {
+        // Durchführung des Dateiuploads
         $uploadDirectory = 'uploads/';
-
         $fileName = $_FILES['file']['name'];
         $fileTmpName = $_FILES['file']['tmp_name'];
         $fileType = $_FILES['file']['type'];
         $fileSize = $_FILES['file']['size'];
         $fileError = $_FILES['file']['error'];
-
         $title = isset($_POST['title']) ? $_POST['title'] : '';
-
         $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-
-        $allowedExtensions = array('mp4', 'mov', 'avi', 'mp3', 'wav', 'png', 'jpg', 'jpeg', 'webp', 'gif', 'mpg', 'mpeg', 'mpe','mpe');
-
+        $allowedExtensions = array('png', 'jpg', 'jpeg', 'webp', 'gif', 'mpg', 'mpeg', 'mpe', 'mpe');
         if (in_array($fileExt, $allowedExtensions)) {
             if ($fileError === 0) {
                 $uploadPath = $uploadDirectory . $fileName;
@@ -422,4 +457,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 </body>
+	<footer>
+		<hr>
+		<a href="tos.html">TO's</a> |
+		<a href="impresum.html">Impresum</a> | <a href="logout.php">Logout</a>
+	</footer>
 </html>
